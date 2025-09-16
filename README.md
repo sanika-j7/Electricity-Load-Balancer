@@ -1,100 +1,59 @@
-# ⚡ Electricity Load Balancer
+# Electricity Load Balancer
 
-## 🧠 Project Overview
-This C++ project simulates a smart electricity load balancer using key data structures: binary trees (for the grid hierarchy), priority queues (for demand), and linked lists (for consumption history). It mimics a real-world electricity distribution network with automatic load prediction, overload redirection, and fault recovery features.
+## Overview
+This project simulates an **Electricity Load Balancer System** for power grids. It manages demands, predicts loads, balances across substations and transformers, and logs consumption history. The project demonstrates:
+- Priority queues for demand management.
+- Linked list for consumption history.
+- Binary tree for grid structure (Main Grid → Substations → Transformers).
+- Load prediction and balancing.
+- CSV logging.
 
----
+## Project Structure
+```
+ElectricityLoadBalancer/
+├── CMakeLists.txt
+├── include/
+│   ├── Demand.h
+│   ├── PriorityDemandQueue.h
+│   ├── LinkedList.h
+│   ├── GridNode.h
+│   ├── Utils.h
+├── src/
+│   ├── Demand.cpp
+│   ├── PriorityDemandQueue.cpp
+│   ├── LinkedList.cpp
+│   ├── GridNode.cpp
+│   ├── Utils.cpp
+│   ├── main.cpp
+├── data/
+│   └── load_report.csv
+├── tests/
+│   ├── CMakeLists.txt
+│   └── test_load_balancer.cpp
+└── README.md
+```
+## Demo
+[PPT](https://www.canva.com/design/DAGjpDMUFz4/v9fCWvOmJe5MvG0S-UXw7w/edit)
 
-## 🏗️ Architecture
-
-### 🔌 Grid Hierarchy
-A binary tree structure represents the grid.
-
-Nodes are classified as:
-- **Main Grid**
-- **Substation**
-- **Transformer**
-
-Each node has:
-- Unique ID and name
-- Capacity
-- Health score
-- Load consumption history
-- Demand queue (with critical demand prioritization)
-
----
-
-## 🗂️ Data Structures Used
-- 🔼 **Priority Queue** → Handles demand requests, prioritizing critical ones.
-- 🔁 **Linked List** → Stores and displays daily load history for each node.
-- 🌲 **Binary Tree** → Represents the grid hierarchy.
-
----
-
-## 🔧 Core Functionalities
-
-### 1. ⚙️ Load Balancing (`balanceLoad`)
-- Predicts the next load using average of last 3 days + 10% buffer.
-- Sets the current load based on capacity and demand.
-- If overload occurs:
-  - Redirects excess to child nodes or other transformers.
-  - Reduces health score of overloaded node.
-  - Logs to CSV (with timestamp) for reporting.
-
-### 2. 🧾 Demand Queueing
-- Users can enqueue demands to a specific node (with a critical flag).
-- Critical demands are handled first via operator overloading in the `Demand` struct.
-
-### 3. 📊 Load History Tracking
-- Daily load updates are stored in a linked list per node.
-- Users can view historical loads of any node interactively.
-
-### 4. 🌲 Tree Display (`displayGrid`)
-Displays grid structure in an indented tree format:
+## Build Instructions
 ```bash
-├── Main Grid 1
-│   ├── Substation 2
-│   │   ├── Transformer 4
-│   │   └── Transformer 5
-│   └── Substation 3
-│       ├── Transformer 6
-│       └── Transformer 7
+mkdir build
+cd build
+cmake ..
+cmake --build .
+./bin/ElectricityLoadBalancer
 ```
 
-### 5. ⚖️ Show Max/Min Load Nodes
-- Scans the tree for max and min current load across active nodes.
-- Useful for visualizing uneven load distribution.
+## Features
+1. **Display Grid** – Shows hierarchical grid structure.
+2. **Add Demand** – Adds demand to a node (critical or non-critical).
+3. **Balance Load** – Distributes load across nodes and prevents overload.
+4. **View Node Load History** – Displays past load records.
+5. **Show Max/Min Load Node** – Identifies heavily and lightly loaded nodes.
+6. **Simulate Power Loss/Recovery** – Toggles node activity.
 
-### 6. 💡 Simulate Power Loss / Recovery
-- Toggles a node's power status (active/inactive).
-- Inactive nodes are ignored during load balancing.
-- Demonstrates fault tolerance in the grid.
-
----
-
-## 📁 Logging & Reporting
-`load_report.csv` contains:
-- Node name, ID, type
-- Capacity, current load
-- Health score
-- Timestamp of each demand
-
----
-
-## 🧪 How to Use
-1. Enter grid depth (3 → Main → Substation → Transformer)
-2. Use the menu to:
-   - Display grid
-   - Add demand
-   - Balance load
-   - View load history
-   - Show max/min load nodes
-   - Simulate power loss or recovery
-
----
-
-## 🌟 Unique Features
-- Uses real-time timestamps for demand logs.
-- Tracks node health and adjusts based on performance.
-- Visually appealing and realistic grid representation.
-- Includes overload redirection and predictive load planning.
+## Future Improvements
+- Unit testing with GoogleTest.
+- Smarter load prediction with machine learning.
+- GUI visualization of grid structure.
+- Real-time monitoring dashboard.
